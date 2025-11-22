@@ -16,6 +16,11 @@ export const metadata: Metadata = {
   title: "SkillPath — Trilha de Aprendizagem com IA",
   description:
     "Plataforma que gera trilhas de aprendizagem personalizadas usando IA. Simples, acessível e focada no seu objetivo profissional.",
+  icons: {
+    icon: "/white-logo.png",
+    shortcut: "/white-logo.png",
+    apple: "/white-logo.png",
+  },
 };
 
 export default function RootLayout({

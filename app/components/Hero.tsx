@@ -1,11 +1,12 @@
- 
+import Image from "next/image";
+
 export default function Hero() {
   return (
     <section id="home" className="relative h-screen">
       <header className="absolute inset-x-0 top-0 z-10 mt-8">
         <div className="mx-auto max-w-7xl px-8 py-6 relative flex items-center justify-center">
-          <a href="#" className="absolute left-8 top-1/2 -translate-y-1/2 text-white font-semibold tracking-tight">
-            SkillPath
+          <a href="/" className="absolute left-8 top-1/2 -translate-y-1/2">
+            <Image src="/white-logo.png" alt="SkillPath" width={28} height={28} priority />
           </a>
           <nav className="hidden md:flex items-center gap-14 text-sm text-foreground/80">
             <a href="#home" className="transition-colors hover:text-white">Início</a>
