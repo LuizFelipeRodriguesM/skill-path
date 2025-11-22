@@ -1,8 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import ReactMarkdown from "react-markdown";
-import remarkGfm from "remark-gfm";
+import { useRouter } from "next/navigation";
 
 interface ContactData {
   name: string;
@@ -31,6 +30,7 @@ interface ApiResponse {
 
 export default function LearningPathGenerator() {
   const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+  const router = useRouter();
   
   const [contactData, setContactData] = useState<ContactData>({
     name: "",
@@ -83,7 +83,14 @@ export default function LearningPathGenerator() {
       const result: ApiResponse = await response.json();
 
       if (result.success && result.data) {
+        // Guarda o markdown e redireciona para /plan
+        try {
+          sessionStorage.setItem("generatedPlanMarkdown", result.data.markdown);
+        } catch {
+          // fallback silencioso
+        }
         setGeneratedPath(result.data.markdown);
+        router.push("/plan");
       } else {
         setError(result.error || "Erro ao gerar trilha");
       }
@@ -105,41 +112,10 @@ export default function LearningPathGenerator() {
     });
   };
 
+  // O componente não renderiza mais a trilha gerada aqui
+  // Isso é feito na página /plan
   if (generatedPath) {
-    return (
-      <div className="w-full space-y-6">
-        <div className="rounded-xl border border-white/15 bg-white/5 p-8">
-          <div className="prose prose-slate dark:prose-invert max-w-none">
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>
-              {generatedPath}
-            </ReactMarkdown>
-          </div>
-        </div>
-
-        <button
-          onClick={() => {
-            setGeneratedPath(null);
-            setCurrentStep(1);
-            setContactData({
-              name: "",
-              email: "",
-              phone: "",
-            });
-            setFormData({
-              objective: "",
-              area: "",
-              level: "",
-              weeklyTime: 5,
-              deadlineWeeks: undefined,
-              preferredFormat: [],
-            });
-          }}
-          className="w-full py-3 px-6 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl font-medium shadow-lg shadow-[var(--brand-secondary)]/20 hover:brightness-[1.05] transition"
-        >
-          Criar Nova Trilha
-        </button>
-      </div>
-    );
+    return null;
   }
 
   // Step 1: Formulário de Contato
