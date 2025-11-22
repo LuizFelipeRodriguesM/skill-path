@@ -9,14 +9,15 @@ export default function Hero() {
           <Link href="/" className="absolute left-8 top-1/2 -translate-y-1/2">
             <Image src="/white-logo.png" alt="SkillPath" width={28} height={28} priority />
           </Link>
-          <nav className="hidden md:flex items-center gap-14 text-sm text-foreground/80">
-            <a href="#home" className="transition-colors hover:text-white">Início</a>
-            <a href="#about" className="transition-colors hover:text-white">Sobre</a>
-            <a href="#services" className="transition-colors hover:text-white">Serviços</a>
-            <a href="#contact" className="transition-colors hover:text-white">Contato</a>
+          <nav aria-label="Navegação principal" className="hidden md:flex items-center gap-14 text-sm text-foreground/80">
+            <a href="#home" aria-label="Ir para o início da página" className="transition-colors hover:text-white">Início</a>
+            <a href="#about" aria-label="Ir para a seção sobre" className="transition-colors hover:text-white">Sobre</a>
+            <a href="#services" aria-label="Ir para a seção de serviços" className="transition-colors hover:text-white">Serviços</a>
+            <a href="#contact" aria-label="Ir para a seção de contato" className="transition-colors hover:text-white">Contato</a>
           </nav>
           <a
             href="#contact"
+            aria-label="Criar trilha de aprendizagem personalizada"
             className="hidden md:inline-flex absolute right-8 top-1/2 -translate-y-1/2 items-center justify-center rounded-xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] px-4 py-2 text-sm font-medium text-white shadow-lg shadow-[var(--brand-secondary)]/20 transition hover:brightness-[1.05] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/60"
           >
             Criar minha trilha
@@ -42,7 +43,7 @@ export default function Hero() {
           <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
             Aprenda hoje o que o futuro<br className="hidden md:block" /> vai exigir amanhã
           </h1>
-          <p className="mx-auto mt-5 max-w-2xl text-base md:text-lg text-foreground/70">
+          <p className="mx-auto mt-5 max-w-2xl text-base md:text-lg text-foreground/90">
             Trilha de estudos personalizada com IA. Simples, prática e focada no seu objetivo profissional.
           </p>
           <div className="mt-8 flex flex-wrap items-center justify-center gap-4">
