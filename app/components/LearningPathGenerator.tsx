@@ -4,6 +4,12 @@ import { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 
+interface ContactData {
+  name: string;
+  email: string;
+  phone: string;
+}
+
 interface FormData {
   objective: string;
   area: string;
@@ -24,6 +30,14 @@ interface ApiResponse {
 }
 
 export default function LearningPathGenerator() {
+  const [currentStep, setCurrentStep] = useState<1 | 2>(1);
+  
+  const [contactData, setContactData] = useState<ContactData>({
+    name: "",
+    email: "",
+    phone: "",
+  });
+
   const [formData, setFormData] = useState<FormData>({
     objective: "",
     area: "",
@@ -36,6 +50,20 @@ export default function LearningPathGenerator() {
   const [generatedPath, setGeneratedPath] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+
+  const handleContactSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    setError(null);
+    
+    // Validação simples
+    if (!contactData.name || !contactData.email || !contactData.phone) {
+      setError("Por favor, preencha todos os campos.");
+      return;
+    }
+    
+    // Avança para o próximo passo
+    setCurrentStep(2);
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -91,6 +119,12 @@ export default function LearningPathGenerator() {
         <button
           onClick={() => {
             setGeneratedPath(null);
+            setCurrentStep(1);
+            setContactData({
+              name: "",
+              email: "",
+              phone: "",
+            });
             setFormData({
               objective: "",
               area: "",
@@ -108,8 +142,105 @@ export default function LearningPathGenerator() {
     );
   }
 
+  // Step 1: Formulário de Contato
+  if (currentStep === 1) {
+    return (
+      <form onSubmit={handleContactSubmit} className="space-y-4 justify-center items-center">
+        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+          Vamos começar! Informe seus dados
+        </h2>
+
+        {/* Nome */}
+        <div className="grid gap-2">
+          <label htmlFor="name" className="text-sm text-foreground/80">
+            Nome completo *
+          </label>
+          <input
+            type="text"
+            id="name"
+            required
+            maxLength={100}
+            placeholder="Digite seu nome completo"
+            value={contactData.name}
+            onChange={(e) =>
+              setContactData({ ...contactData, name: e.target.value })
+            }
+            className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition placeholder:text-foreground/40 focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+          />
+        </div>
+
+        {/* Email */}
+        <div className="grid gap-2">
+          <label htmlFor="email" className="text-sm text-foreground/80">
+            E-mail *
+          </label>
+          <input
+            type="email"
+            id="email"
+            required
+            placeholder="seu.email@exemplo.com"
+            value={contactData.email}
+            onChange={(e) =>
+              setContactData({ ...contactData, email: e.target.value })
+            }
+            className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition placeholder:text-foreground/40 focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+          />
+        </div>
+
+        {/* Telefone */}
+        <div className="grid gap-2">
+          <label htmlFor="phone" className="text-sm text-foreground/80">
+            Telefone para contato *
+          </label>
+          <input
+            type="tel"
+            id="phone"
+            required
+            placeholder="(00) 00000-0000"
+            value={contactData.phone}
+            onChange={(e) =>
+              setContactData({ ...contactData, phone: e.target.value })
+            }
+            className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition placeholder:text-foreground/40 focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+          />
+        </div>
+
+        {/* Error message */}
+        {error && (
+          <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-sm">
+            {error}
+          </div>
+        )}
+
+        {/* Submit button */}
+        <button
+          type="submit"
+          className="mt-2 w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[var(--brand-secondary)]/20 transition hover:brightness-[1.05] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+        >
+          Continuar para criar trilha
+        </button>
+      </form>
+    );
+  }
+
+  // Step 2: Formulário de Geração da Trilha
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">{/* Removido o título duplicado */}
+
+    
+    <form onSubmit={handleSubmit} className="space-y-4 justify-center items-center">
+
+<div className="flex items-center justify-between">
+  <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+        Crie sua trilha de aprendizagem
+      </h2>
+      <button
+        type="button"
+        onClick={() => setCurrentStep(1)}
+        className="text-sm text-foreground/60 hover:text-foreground transition underline"
+      >
+        ← Voltar
+      </button>
+    </div>
 
       {/* Objetivo profissional */}
       <div className="grid gap-2">
