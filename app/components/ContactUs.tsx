@@ -17,27 +17,26 @@ export default function ContactUs() {
 
   return (
     <section id="contact" className="mx-auto max-w-6xl px-6 py-16 md:py-24">
-      <div className="glass-container rounded-2xl p-8 md:p-12">
-        <div className="md:flex md:items-start md:justify-between md:gap-10">
-          <div className="md:w-1/2">
-            <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
-              Crie sua trilha de aprendizagem
-            </h2>
-            <p className="mt-3 text-foreground/80">
-              Preencha seus dados para receber uma trilha personalizada (simulada no MVP).
-            </p>
-            <div className="mt-6 rounded-xl border border-white/15 bg-white/5 p-5 text-sm text-foreground/70">
-              Campos considerados:
-              <ul className="mt-2 list-disc pl-5">
-                <li>Objetivo profissional</li>
-                <li>Área de interesse</li>
-                <li>Nível atual</li>
-                <li>Tempo disponível</li>
-              </ul>
-            </div>
+      <div className="md:flex md:items-start md:justify-between md:gap-12">
+        <div className="md:w-1/2">
+          <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">
+            Crie sua trilha de aprendizagem
+          </h2>
+          <p className="mt-4 text-foreground/80 text-lg">
+            Preencha seus dados para receber uma trilha personalizada (simulada no MVP).
+          </p>
+          <div className="mt-8 rounded-xl border border-white/15 bg-white/5 p-6 text-sm text-foreground/70">
+            Campos considerados:
+            <ul className="mt-3 list-disc pl-5 space-y-1">
+              <li>Objetivo profissional</li>
+              <li>Área de interesse</li>
+              <li>Nível atual</li>
+              <li>Tempo disponível</li>
+            </ul>
           </div>
+        </div>
 
-          <div className="mt-8 md:mt-0 md:w-1/2">
+        <div className="mt-8 md:mt-0 md:w-1/2">
             <form onSubmit={onSubmit} className="grid grid-cols-1 gap-4">
               <div className="grid gap-2">
                 <label className="text-sm text-foreground/80">Nome</label>
@@ -130,7 +129,6 @@ export default function ContactUs() {
             </form>
           </div>
         </div>
-      </div>
     </section>
   );
 }

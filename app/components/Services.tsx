@@ -38,43 +38,41 @@ function Benefit({
 export default function Services() {
   return (
     <section id="services" className="mx-auto max-w-6xl px-6 py-16 md:py-24">
-      <div className="glass-container rounded-2xl p-8 md:p-12">
-        <h2 className="text-2xl md:text-3xl font-semibold tracking-tight">Como funciona</h2>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <Step
-            index={1}
-            title="Conte sobre você"
-            description="Informe objetivo profissional, área de interesse, nível e tempo disponível."
-          />
-          <Step
-            index={2}
-            title="Geramos sua trilha"
-            description="Uma sequência semanal com conteúdos gratuitos, práticos e focados."
-          />
-          <Step
-            index={3}
-            title="Evolua de forma contínua"
-            description="Acompanhe tarefas por semana e recomendações para avançar com confiança."
-          />
-        </div>
+      <h2 className="text-2xl md:text-3xl font-semibold tracking-tight text-center">Como funciona</h2>
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <Step
+          index={1}
+          title="Conte sobre você"
+          description="Informe objetivo profissional, área de interesse, nível e tempo disponível."
+        />
+        <Step
+          index={2}
+          title="Geramos sua trilha"
+          description="Uma sequência semanal com conteúdos gratuitos, práticos e focados."
+        />
+        <Step
+          index={3}
+          title="Evolua de forma contínua"
+          description="Acompanhe tarefas por semana e recomendações para avançar com confiança."
+        />
+      </div>
 
-        <h3 className="mt-10 text-xl md:text-2xl font-semibold tracking-tight">
-          Benefícios
-        </h3>
-        <div className="mt-6 grid gap-4 md:grid-cols-3">
-          <Benefit
-            title="Personalização com IA"
-            description="Recomendações alinhadas ao seu perfil e objetivos (simulado no MVP)."
-          />
-          <Benefit
-            title="Conteúdo acessível"
-            description="Links gratuitos e de qualidade: docs, vídeos, cursos e exercícios."
-          />
-          <Benefit
-            title="Foco no mercado"
-            description="Habilidades com demanda real: versionamento, projetos práticos e deploy."
-          />
-        </div>
+      <h3 className="mt-16 text-xl md:text-2xl font-semibold tracking-tight text-center">
+        Benefícios
+      </h3>
+      <div className="mt-8 grid gap-4 md:grid-cols-3">
+        <Benefit
+          title="Personalização com IA"
+          description="Recomendações alinhadas ao seu perfil e objetivos (simulado no MVP)."
+        />
+        <Benefit
+          title="Conteúdo acessível"
+          description="Links gratuitos e de qualidade: docs, vídeos, cursos e exercícios."
+        />
+        <Benefit
+          title="Foco no mercado"
+          description="Habilidades com demanda real: versionamento, projetos práticos e deploy."
+        />
       </div>
     </section>
   );

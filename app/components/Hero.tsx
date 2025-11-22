@@ -1,7 +1,7 @@
  
 export default function Hero() {
   return (
-    <section id="home" className="relative overflow-hidden h-screen">
+    <section id="home" className="relative h-screen">
       <header className="absolute inset-x-0 top-0 z-10 mt-8">
         <div className="mx-auto max-w-7xl px-8 py-6 relative flex items-center justify-center">
           <a href="#" className="absolute left-8 top-1/2 -translate-y-1/2 text-white font-semibold tracking-tight">
@@ -34,22 +34,9 @@ export default function Hero() {
           </button>
         </div>
       </header>
-      <div
-        aria-hidden
-        className="pointer-events-none absolute inset-0 -z-10"
-      >
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,rgba(113,187,212,0.18),transparent_40%),radial-gradient(ellipse_at_bottom,rgba(52,95,151,0.18),transparent_40%)]" />
-        <div className="absolute left-1/2 top-1/2 h-[80vh] w-[80vh] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[var(--brand-primary)]/20 blur-[120px]" />
-        <div className="absolute -top-24 -left-24 h-[50vh] w-[50vh] rounded-full bg-[var(--brand-secondary)]/25 blur-[120px]" />
-        <div className="absolute -bottom-24 left-1/2 h-[40vh] w-[90vw] -translate-x-1/2 rounded-[50%] bg-gradient-to-t from-black/60 to-transparent blur-3xl opacity-60" />
-      </div>
 
       <div className="mx-auto max-w-7xl px-8 pt-40 pb-24 md:pt-48 md:pb-32">
         <div className="rounded-2xl p-8 md:p-14 text-center">
-          <div className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1 text-xs md:text-sm text-foreground/80 shadow-sm">
-            <span className="inline-block h-2 w-2 rounded-full bg-[var(--brand-primary)]" />
-            SkillPath — IA para trilhas de aprendizagem
-          </div>
           <h1 className="mt-6 text-5xl font-semibold leading-tight tracking-tight md:text-7xl">
             Aprenda hoje o que o futuro<br className="hidden md:block" /> vai exigir amanhã
           </h1>

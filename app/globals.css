@@ -26,12 +26,3 @@ body {
   color: var(--foreground);
   font-family: Arial, Helvetica, sans-serif;
 }
-
-/* Glassmorphism helper */
-.glass-container {
-  background: color-mix(in oklab, var(--foreground) 7%, transparent);
-  backdrop-filter: blur(16px) saturate(120%);
-  -webkit-backdrop-filter: blur(16px) saturate(120%);
-  border: 1px solid color-mix(in oklab, white 16%, transparent);
-  box-shadow: 0 10px 30px color-mix(in oklab, var(--brand-secondary) 16%, transparent);
-}
