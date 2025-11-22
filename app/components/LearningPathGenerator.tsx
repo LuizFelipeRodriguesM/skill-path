@@ -1,0 +1,260 @@
+"use client";
+
+import { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
+
+interface FormData {
+  objective: string;
+  area: string;
+  level: string;
+  weeklyTime: number;
+  deadlineWeeks?: number;
+  preferredFormat?: string[];
+}
+
+interface ApiResponse {
+  success: boolean;
+  data?: {
+    markdown: string;
+    generatedAt: string;
+  };
+  error?: string;
+  details?: Array<{ field: string; message: string }>;
+}
+
+export default function LearningPathGenerator() {
+  const [formData, setFormData] = useState<FormData>({
+    objective: "",
+    area: "",
+    level: "",
+    weeklyTime: 5,
+    deadlineWeeks: undefined,
+    preferredFormat: [],
+  });
+
+  const [generatedPath, setGeneratedPath] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setError(null);
+    setGeneratedPath(null);
+
+    try {
+      const response = await fetch("/api/generate-path", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const result: ApiResponse = await response.json();
+
+      if (result.success && result.data) {
+        setGeneratedPath(result.data.markdown);
+      } else {
+        setError(result.error || "Erro ao gerar trilha");
+      }
+    } catch (err) {
+      setError("Erro de conexão. Tente novamente.");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleFormatToggle = (format: string) => {
+    setFormData((prev) => {
+      const current = prev.preferredFormat || [];
+      const updated = current.includes(format)
+        ? current.filter((f) => f !== format)
+        : [...current, format];
+      return { ...prev, preferredFormat: updated };
+    });
+  };
+
+  if (generatedPath) {
+    return (
+      <div className="w-full space-y-6">
+        <div className="rounded-xl border border-white/15 bg-white/5 p-8">
+          <div className="prose prose-slate dark:prose-invert max-w-none">
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>
+              {generatedPath}
+            </ReactMarkdown>
+          </div>
+        </div>
+
+        <button
+          onClick={() => {
+            setGeneratedPath(null);
+            setFormData({
+              objective: "",
+              area: "",
+              level: "",
+              weeklyTime: 5,
+              deadlineWeeks: undefined,
+              preferredFormat: [],
+            });
+          }}
+          className="w-full py-3 px-6 bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] text-white rounded-xl font-medium shadow-lg shadow-[var(--brand-secondary)]/20 hover:brightness-[1.05] transition"
+        >
+          Criar Nova Trilha
+        </button>
+      </div>
+    );
+  }
+
+  return (
+    <form onSubmit={handleSubmit} className="space-y-4">{/* Removido o título duplicado */}
+
+      {/* Objetivo profissional */}
+      <div className="grid gap-2">
+        <label htmlFor="objective" className="text-sm text-foreground/80">
+          Objetivo profissional *
+        </label>
+        <input
+          type="text"
+          id="objective"
+          required
+          maxLength={120}
+          placeholder="Ex.: Desenvolvedor Frontend júnior"
+          value={formData.objective}
+          onChange={(e) =>
+            setFormData({ ...formData, objective: e.target.value })
+          }
+          className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition placeholder:text-foreground/40 focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+        />
+      </div>
+
+      {/* Área de interesse */}
+      <div className="grid gap-2">
+        <label htmlFor="area" className="text-sm text-foreground/80">
+          Área de interesse *
+        </label>
+        <select
+          id="area"
+          required
+          value={formData.area}
+          onChange={(e) => setFormData({ ...formData, area: e.target.value })}
+          className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+        >
+          <option value="">Selecione uma área</option>
+          <option value="Desenvolvimento Web">Desenvolvimento Web</option>
+          <option value="IA/ML">IA/ML</option>
+          <option value="Dados">Dados</option>
+          <option value="Design">Design</option>
+          <option value="DevOps">DevOps</option>
+        </select>
+      </div>
+
+      {/* Nível atual */}
+      <div className="grid gap-2">
+        <label htmlFor="level" className="text-sm text-foreground/80">
+          Nível atual *
+        </label>
+        <select
+          id="level"
+          required
+          value={formData.level}
+          onChange={(e) =>
+            setFormData({ ...formData, level: e.target.value })
+          }
+          className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+        >
+          <option value="">Selecione seu nível</option>
+          <option value="iniciante">Iniciante</option>
+          <option value="intermediário">Intermediário</option>
+          <option value="avançado">Avançado</option>
+        </select>
+      </div>
+
+      {/* Grid de 2 colunas */}
+      <div className="grid gap-4 md:grid-cols-2">
+        {/* Tempo disponível */}
+        <div className="grid gap-2">
+          <label htmlFor="weeklyTime" className="text-sm text-foreground/80">
+            Tempo semanal (horas) *
+          </label>
+          <input
+            type="number"
+            id="weeklyTime"
+            required
+            min={1}
+            max={20}
+            value={formData.weeklyTime}
+            onChange={(e) =>
+              setFormData({ ...formData, weeklyTime: Number(e.target.value) })
+            }
+            className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition placeholder:text-foreground/40 focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+          />
+        </div>
+
+        {/* Prazo */}
+        <div className="grid gap-2">
+          <label htmlFor="deadlineWeeks" className="text-sm text-foreground/80">
+            Prazo (semanas)
+          </label>
+          <input
+            type="number"
+            id="deadlineWeeks"
+            min={2}
+            max={26}
+            placeholder="Opcional"
+            value={formData.deadlineWeeks || ""}
+            onChange={(e) =>
+              setFormData({
+                ...formData,
+                deadlineWeeks: e.target.value ? Number(e.target.value) : undefined,
+              })
+            }
+            className="rounded-lg border border-white/15 bg-white/5 px-4 py-3 outline-none transition placeholder:text-foreground/40 focus:ring-2 focus:ring-[var(--brand-primary)]/60"
+          />
+        </div>
+      </div>
+
+      {/* Formato preferido */}
+      <div className="grid gap-2">
+        <label className="text-sm text-foreground/80">
+          Formato preferido (opcional)
+        </label>
+        <div className="flex flex-wrap gap-2">
+          {["vídeo", "artigo", "curso", "documentação"].map((format) => (
+            <button
+              key={format}
+              type="button"
+              onClick={() => handleFormatToggle(format)}
+              className={`px-4 py-2 rounded-lg border transition-all ${
+                formData.preferredFormat?.includes(format)
+                  ? "bg-[var(--brand-primary)] border-[var(--brand-primary)] text-white"
+                  : "bg-white/5 border-white/15 hover:border-[var(--brand-primary)]"
+              }`}
+            >
+              {format}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* Error message */}
+      {error && (
+        <div className="p-4 bg-red-500/10 border border-red-500/30 rounded-lg text-red-500 text-sm">
+          {error}
+        </div>
+      )}
+
+      {/* Submit button */}
+      <button
+        type="submit"
+        disabled={isLoading}
+        className="mt-2 w-full inline-flex items-center justify-center rounded-xl bg-gradient-to-r from-[var(--brand-primary)] to-[var(--brand-secondary)] px-6 py-3 text-sm font-medium text-white shadow-lg shadow-[var(--brand-secondary)]/20 transition hover:brightness-[1.05] focus:outline-none focus:ring-2 focus:ring-[var(--brand-primary)]/60 disabled:opacity-60"
+      >
+        {isLoading ? "Gerando sua trilha..." : "Gerar trilha"}
+      </button>
+    </form>
+  );
+}
+
