@@ -1,8 +1,8 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --background: #0a0a0a;
+  --foreground: #ededed;
   --brand-primary: #71BBD4; /* cyan-ish */
   --brand-secondary: #345F97; /* deep blue */
 }
@@ -12,13 +12,6 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
 }
 
 body {
@@ -227,18 +220,16 @@ html {
   }
 }
 
-/* Dark mode adjustments */
-@media (prefers-color-scheme: dark) {
-  .prose :where(code):not(:where([class~="not-prose"] *)) {
-    background-color: rgba(255, 255, 255, 0.1);
-  }
-  
-  .prose :where(pre):not(:where([class~="not-prose"] *)) {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
-  
-  .prose :where(table):not(:where([class~="not-prose"] *)) {
-    border: 1px solid rgba(255, 255, 255, 0.1);
-  }
+/* Dark mode styles (forced) */
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+  background-color: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.prose :where(table):not(:where([class~="not-prose"] *)) {
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
