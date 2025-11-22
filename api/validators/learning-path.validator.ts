@@ -15,13 +15,9 @@ export const userProfileSchema = z.object({
     "Dados",
     "Design",
     "DevOps",
-  ], {
-    errorMap: () => ({ message: "Área de interesse inválida" }),
-  }),
+  ]),
   
-  level: z.enum(["iniciante", "intermediário", "avançado"], {
-    errorMap: () => ({ message: "Nível deve ser iniciante, intermediário ou avançado" }),
-  }),
+  level: z.enum(["iniciante", "intermediário", "avançado"]),
   
   weeklyTime: z
     .number()
