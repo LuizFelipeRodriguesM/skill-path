@@ -146,3 +146,4 @@ export default function QuizSection({ questions, topicTitle }: QuizSectionProps)
   );
 }
 
+
